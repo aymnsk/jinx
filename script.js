@@ -4,7 +4,7 @@ async function sendMessage() {
 
   chatDiv.innerHTML += `<p><b>You:</b> ${input}</p>`;
 
-  const res = await fetch("https://your-replit-url.jinx.repl.co/chat", {
+  const res = await fetch("https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ text: input })
@@ -12,5 +12,4 @@ async function sendMessage() {
 
   const data = await res.json();
   chatDiv.innerHTML += `<p><b>Jinx:</b> ${data.reply}</p>`;
-  document.getElementById("audioPlayer").src = `https://your-replit-url.jinx.repl.co/audio`;
 }
