@@ -1,10 +1,4 @@
-// script.js (everything in one file)
-import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.6'
-
-const SUPABASE_URL = 'https://birkyotaolnhspyaggcy.supabase.co'
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
-const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-
+// script.js — username-only login with whitelist
 const input = document.getElementById('input')
 const sendBtn = document.getElementById('sendBtn')
 const loginBtn = document.getElementById('loginBtn')
@@ -12,32 +6,25 @@ const chatbox = document.getElementById('chatbox')
 const player = document.getElementById('player')
 
 const BACKEND_URL = "https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev"
+const ALLOWED_USERS = ['mn01', 'testmn'] // ✅ Only these users allowed
 
-loginBtn.onclick = async () => {
-  const email = prompt("Enter your email:")
-  if (email) {
-    const { error } = await supabase.auth.signInWithOtp({ email })
-    if (error) alert("Login error: " + error.message)
-    else {
-      alert("📩 Check your inbox!")
-      localStorage.setItem("user_email", email)
-    }
+loginBtn.onclick = () => {
+  const username = prompt("Enter your nickname 💖 (e.g. mn01)")
+  if (!username || !ALLOWED_USERS.includes(username)) {
+    alert("Sorry, you're not allowed to talk to Jinx 😿")
+    return
   }
-}
-
-async function getUserId() {
-  const { data, error } = await supabase.auth.getUser()
-  if (error || !data.user) return null
-  return data.user.id
+  localStorage.setItem('user_id', username)
+  alert(`Welcome ${username}! Jinx missed you 🥺💘`)
 }
 
 sendBtn.onclick = async () => {
   const text = input.value.trim()
   if (!text) return
 
-  const user_id = await getUserId()
-  if (!user_id) {
-    alert("Please login first")
+  const user_id = localStorage.getItem('user_id')
+  if (!user_id || !ALLOWED_USERS.includes(user_id)) {
+    alert("Access denied. Please login with a valid user ID.")
     return
   }
 
@@ -78,6 +65,11 @@ function playAudio(url) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  const stored = localStorage.getItem('user_email')
-  if (stored) console.log(`🔁 Logged in as: ${stored}`)
+  const id = localStorage.getItem('user_id')
+  if (id && ALLOWED_USERS.includes(id)) {
+    console.log(`✅ Logged in as: ${id}`)
+  } else {
+    localStorage.removeItem('user_id')
+    console.warn('⛔ Unauthorized or expired session')
+  }
 })
