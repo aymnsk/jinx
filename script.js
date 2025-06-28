@@ -1,4 +1,4 @@
-// script.js — username-only login with whitelist
+// script.js — final version (no Supabase, username login only)
 const input = document.getElementById('input')
 const sendBtn = document.getElementById('sendBtn')
 const loginBtn = document.getElementById('loginBtn')
@@ -6,12 +6,12 @@ const chatbox = document.getElementById('chatbox')
 const player = document.getElementById('player')
 
 const BACKEND_URL = "https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev"
-const ALLOWED_USERS = ['mn01', 'testmn'] // ✅ Only these users allowed
+const ALLOWED_USERS = ['mn01', 'testmn']
 
 loginBtn.onclick = () => {
-  const username = prompt("Enter your nickname 💖 (e.g. mn01)")
+  const username = prompt("Enter your username 💖 (e.g. mn01 or testmn)")
   if (!username || !ALLOWED_USERS.includes(username)) {
-    alert("Sorry, you're not allowed to talk to Jinx 😿")
+    alert("Sorry, only allowed users can talk to Jinx 😿")
     return
   }
   localStorage.setItem('user_id', username)
@@ -24,22 +24,26 @@ sendBtn.onclick = async () => {
 
   const user_id = localStorage.getItem('user_id')
   if (!user_id || !ALLOWED_USERS.includes(user_id)) {
-    alert("Access denied. Please login with a valid user ID.")
+    alert("Access denied. Please login with a valid username.")
     return
   }
 
   appendUserMsg(text)
   input.value = ''
 
-  const res = await fetch(`${BACKEND_URL}/chat`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user_id, text })
-  })
+  try {
+    const res = await fetch(`${BACKEND_URL}/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id, text })
+    })
 
-  const data = await res.json()
-  if (data.reply) appendJinxMsg(data.reply)
-  if (data.audio) playAudio(`${BACKEND_URL}${data.audio}`)
+    const data = await res.json()
+    if (data.reply) appendJinxMsg(data.reply)
+    if (data.audio) playAudio(`${BACKEND_URL}${data.audio}`)
+  } catch (err) {
+    appendJinxMsg("Oops, Jinx is feeling shy right now 😳")
+  }
 }
 
 function appendUserMsg(msg) {
