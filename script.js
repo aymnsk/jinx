@@ -1,8 +1,8 @@
-// script.js (includes auth + logic in one file)
+// script.js (everything in one file)
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.6'
 
 const SUPABASE_URL = 'https://birkyotaolnhspyaggcy.supabase.co'
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpcmt5b3Rhb2xuaHNweWFnZ2N5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTExMzQyOTEsImV4cCI6MjA2NjcxMDI5MX0.u0MQD0hgVOuU3s7M02WrtYE31bLAvDhpy0yfv00rENE'
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 const input = document.getElementById('input')
@@ -13,34 +13,31 @@ const player = document.getElementById('player')
 
 const BACKEND_URL = "https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev"
 
-// Auth
 loginBtn.onclick = async () => {
-  const email = prompt("Enter your email to login:")
+  const email = prompt("Enter your email:")
   if (email) {
     const { error } = await supabase.auth.signInWithOtp({ email })
-    if (error) alert('Login error: ' + error.message)
+    if (error) alert("Login error: " + error.message)
     else {
-      alert('📩 Check your email to complete login!')
-      localStorage.setItem('user_email', email)
+      alert("📩 Check your inbox!")
+      localStorage.setItem("user_email", email)
     }
   }
 }
 
-// Get user ID
 async function getUserId() {
   const { data, error } = await supabase.auth.getUser()
   if (error || !data.user) return null
   return data.user.id
 }
 
-// Chat handler
 sendBtn.onclick = async () => {
   const text = input.value.trim()
   if (!text) return
 
   const user_id = await getUserId()
   if (!user_id) {
-    alert("Please login first!")
+    alert("Please login first")
     return
   }
 
@@ -80,8 +77,7 @@ function playAudio(url) {
   player.play()
 }
 
-// Auto-login check
 window.addEventListener('DOMContentLoaded', () => {
   const stored = localStorage.getItem('user_email')
-  if (stored) console.log(`🔁 Session active for: ${stored}`)
+  if (stored) console.log(`🔁 Logged in as: ${stored}`)
 })
