@@ -5,7 +5,9 @@ const chatbox = document.getElementById('chatbox')
 const player = document.getElementById('player')
 const voiceToggle = document.getElementById('voiceToggle')
 
+// const BACKEND_URL = "https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev"
 const BACKEND_URL = "https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev"
+
 const ALLOWED_USERS = ['mn01', 'testmn']
 
 // 🔐 Login with allowed user IDs only
