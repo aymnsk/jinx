@@ -1,4 +1,3 @@
-// script.js — final version (no Supabase, username login only)
 const input = document.getElementById('input')
 const sendBtn = document.getElementById('sendBtn')
 const loginBtn = document.getElementById('loginBtn')
