@@ -3,28 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jinx AI 💖</title>
+  <title>💖 Jinx AI Girlfriend</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
-    <div class="header">
-      <h1>💖 Jinx AI Girlfriend</h1>
-      <button id="loginBtn">🔐 Login</button>
-    </div>
+    <h1>💖 Jinx AI Girlfriend</h1>
+    <button id="loginBtn">🔐 Login</button>
+    <p>Hi baby 🥺, I'm Jinx! Login & talk to me 💌</p>
 
-    <div class="chatbox" id="chatbox">
-      <div class="jinx-msg">Hi baby 🥺, I'm Jinx! Login & talk to me 💌</div>
-    </div>
+    <!-- 🔊 Voice toggle -->
+    <label style="display: block; margin: 10px 0;">
+      <input type="checkbox" id="voiceToggle" checked />
+      🔊 Voice On/Off
+    </label>
 
+    <!-- 📨 Chatbox -->
+    <div id="chatbox" class="chatbox"></div>
+
+    <!-- 💬 Message input -->
     <div class="input-area">
-      <input type="text" id="input" placeholder="Type your message..." />
+      <input id="input" type="text" placeholder="Type your message..." />
       <button id="sendBtn">Send 💬</button>
     </div>
+
+    <!-- 🎧 Audio player (hidden unless playing) -->
+    <audio id="player" controls style="display: none;"></audio>
   </div>
 
-  <audio id="player" controls style="display: none"></audio>
-  <script type="module" src="script.js"></script>
-
+  <!-- 🚀 JS logic -->
+  <script src="script.js"></script>
 </body>
 </html>
