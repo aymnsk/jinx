@@ -1,34 +1,56 @@
-async function sendMessage() {
-  const input = document.getElementById("userInput").value;
-  const chatDiv = document.getElementById("chat");
+// script.js
+import { getUserId, login } from './auth.js'
 
-  if (!input.trim()) return;
+const input = document.getElementById('input')
+const sendBtn = document.getElementById('sendBtn')
+const loginBtn = document.getElementById('loginBtn')
+const chatbox = document.getElementById('chatbox')
+const player = document.getElementById('player')
 
-  // Show user message
-  chatDiv.innerHTML += `<p><b>You:</b> ${input}</p>`;
-  document.getElementById("userInput").value = "";
+loginBtn.onclick = () => login(prompt("Enter your email to login:"))
 
-  try {
-    // Send message to backend
-    const res = await fetch("https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: input })
-    });
+sendBtn.onclick = async () => {
+  const text = input.value.trim()
+  if (!text) return
 
-    const data = await res.json();
-    const reply = data.reply;
-
-    // Show Jinx reply
-    chatDiv.innerHTML += `<p><b>Jinx:</b> ${reply}</p>`;
-
-    // Play voice using audio file returned from backend (gTTS)
-    if (data.audio) {
-      const audio = new Audio("https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev" + data.audio);
-      audio.play();
-    }
-
-  } catch (err) {
-    chatDiv.innerHTML += `<p><b>Error:</b> ${err.message}</p>`;
+  const user_id = await getUserId()
+  if (!user_id) {
+    alert("Please login first!")
+    return
   }
+
+  appendUserMsg(text)
+  input.value = ''
+
+  const res = await fetch("https://your-replit-backend/chat", {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id, text })
+  })
+
+  const data = await res.json()
+  if (data.reply) appendJinxMsg(data.reply)
+  if (data.audio) playAudio(data.audio)
+}
+
+function appendUserMsg(msg) {
+  const div = document.createElement('div')
+  div.className = 'user-msg'
+  div.textContent = 'You: ' + msg
+  chatbox.appendChild(div)
+  chatbox.scrollTop = chatbox.scrollHeight
+}
+
+function appendJinxMsg(msg) {
+  const div = document.createElement('div')
+  div.className = 'jinx-msg'
+  div.textContent = 'Jinx: ' + msg
+  chatbox.appendChild(div)
+  chatbox.scrollTop = chatbox.scrollHeight
+}
+
+function playAudio(url) {
+  player.src = url
+  player.style.display = 'block'
+  player.play()
 }
