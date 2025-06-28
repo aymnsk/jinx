@@ -1,113 +1,87 @@
-/* Base Reset */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* style.css — Jinx AI */
 
 body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(to right, #ffe0ec, #fce4ec);
   font-family: 'Segoe UI', sans-serif;
-  background: #ffe6f0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  color: #333;
 }
 
-/* Main Container */
 .container {
-  width: 100%;
-  max-width: 480px;
-  height: 100vh;
-  background: white;
-  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff5fa;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 105, 180, 0.2);
+  text-align: center;
+}
+
+h1 {
+  color: #e91e63;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin: 6px;
   border-radius: 12px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Header */
-.header {
-  background: #ff8fab;
-  padding: 1rem;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header h1 {
-  font-size: 1.2rem;
-}
-
-#loginBtn {
-  background: #ffffff33;
-  border: 1px solid white;
-  padding: 5px 10px;
-  border-radius: 8px;
-  color: white;
-  font-weight: bold;
   cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
 }
 
-/* Chat Area */
-.chatbox {
-  flex-grow: 1;
-  padding: 1rem;
+button:hover {
+  background-color: #ff1493;
+}
+
+#chatbox {
+  height: 300px;
   overflow-y: auto;
-  background: #fff0f5;
-  display: flex;
-  flex-direction: column;
+  background-color: #fff0f5;
+  border: 1px solid #f8bbd0;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: left;
+  margin: 12px 0;
 }
 
 .user-msg {
-  background: #dff9fb;
-  padding: 0.6rem 1rem;
-  margin: 0.4rem 0;
+  background-color: #e1bee7;
+  padding: 8px 12px;
   border-radius: 10px;
-  align-self: flex-end;
+  margin: 6px 0;
   text-align: right;
-  max-width: 80%;
+  font-weight: bold;
 }
 
 .jinx-msg {
-  background: #ffe0ec;
-  padding: 0.6rem 1rem;
-  margin: 0.4rem 0;
+  background-color: #f8bbd0;
+  padding: 8px 12px;
   border-radius: 10px;
-  align-self: flex-start;
-  color: #ff1493;
+  margin: 6px 0;
+  text-align: left;
   font-style: italic;
-  max-width: 80%;
 }
 
-/* Input Area */
 .input-area {
   display: flex;
-  padding: 1rem;
-  border-top: 1px solid #ccc;
-  background: white;
+  gap: 8px;
+  margin-top: 10px;
 }
 
-#input {
+input[type="text"] {
   flex: 1;
-  padding: 0.6rem;
-  font-size: 1rem;
-  border-radius: 8px;
+  padding: 10px;
+  border-radius: 10px;
   border: 1px solid #ccc;
 }
 
-#sendBtn {
-  background: #ff69b4;
-  color: white;
-  border: none;
-  padding: 0 1rem;
-  margin-left: 0.5rem;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#sendBtn:hover {
-  background: #ff1493;
+audio {
+  margin-top: 10px;
+  width: 100%;
 }
