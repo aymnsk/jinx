@@ -7,7 +7,23 @@ const loginBtn = document.getElementById('loginBtn')
 const chatbox = document.getElementById('chatbox')
 const player = document.getElementById('player')
 
-loginBtn.onclick = () => login(prompt("Enter your email to login:"))
+const BACKEND_URL = "https://958d0e80-5d09-412e-92f7-efc6f9465c41-00-bhtlsigq9q35.sisko.replit.dev"
+
+// Auto-login check
+window.addEventListener('DOMContentLoaded', async () => {
+  const email = localStorage.getItem('user_email')
+  if (email) {
+    console.log(`Auto-login as ${email}`)
+  }
+})
+
+loginBtn.onclick = async () => {
+  const email = prompt("Enter your email to login:")
+  if (email) {
+    await login(email)
+    localStorage.setItem('user_email', email)
+  }
+}
 
 sendBtn.onclick = async () => {
   const text = input.value.trim()
@@ -22,7 +38,7 @@ sendBtn.onclick = async () => {
   appendUserMsg(text)
   input.value = ''
 
-  const res = await fetch("https://your-replit-backend/chat", {
+  const res = await fetch(`${BACKEND_URL}/chat`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ user_id, text })
@@ -30,7 +46,7 @@ sendBtn.onclick = async () => {
 
   const data = await res.json()
   if (data.reply) appendJinxMsg(data.reply)
-  if (data.audio) playAudio(data.audio)
+  if (data.audio) playAudio(`${BACKEND_URL}${data.audio}`)
 }
 
 function appendUserMsg(msg) {
